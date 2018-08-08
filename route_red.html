@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      /* Set the size of the div element that contains the map */
+      #map {
+        height: 100%;
+        width: 80%;
+        float: left;
+      }
+      #txt1 {
+        height: 50%;
+        width: 20%;
+        float: right;
+      }
+      #txt2 {
+        height: 50%;
+        width: 20%;
+        font-size: 10pt;
+        float: right;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="txt">
+      <p><u>Route Breakdown</u></p>
+    </div>
+    <div id="txt2">
+      hi
+    </div>
+    <script>
+// Initialize and add the map
+var map;
+var directionsService;
+var directionsDisplay;
+var total = 0;
+
+
+var summaryPanel = document.getElementById('txt2');
+
+function initMap() {
+  // The marker, positioned at Uluru
+  // First define the marker locations
+  directionsService = new google.maps.DirectionsService();
+  directionsDisplay = new google.maps.DirectionsRenderer();
+  map = new google.maps.Map(
+      document.getElementById('map'), {
+          center: {lat: 51.373734957313746, lng: -0.008637275390654395},
+          zoom: 13});
+  directionsDisplay.setMap(map);
+
+  var start1 = {lat:51.321321, lng:-0.090375963};
+  var wpts1 = [{location: {lat:51.323569, lng:-0.094760598}, stopover: true},
+    {location: {lat:51.324314, lng:-0.096882642}, stopover: true},
+    {location: {lat:51.325959, lng:-0.10071863}, stopover: true},
+    {location: {lat:51.328319, lng:-0.10649193}, stopover: true},
+    {location: {lat:51.330563, lng:-0.10901204}, stopover: true},
+    {location: {lat:51.333133, lng:-0.11116009}, stopover: true},
+    {location: {lat:51.335486, lng:-0.11315942}, stopover: true},
+    {location: {lat:51.338681, lng:-0.11835475}, stopover: true},
+    {location: {lat:51.340185, lng:-0.11738861}, stopover: true},
+    {location: {lat:51.342543, lng:-0.11581308}, stopover: true},
+    {location: {lat:51.34464, lng:-0.11429114}, stopover: true},
+    {location: {lat:51.351888, lng:-0.11538662}, stopover: true},
+    {location: {lat:51.356233, lng:-0.11655843}, stopover: true},
+    {location: {lat:51.359312, lng:-0.11733705}, stopover: true},
+    {location: {lat:51.361245, lng:-0.11786109}, stopover: true},
+    {location: {lat:51.365813, lng:-0.11842081}, stopover: true},
+    {location: {lat:51.368742, lng:-0.118272}, stopover: true},
+    {location: {lat:51.370602, lng:-0.11706073}, stopover: true},
+    {location: {lat:51.372201, lng:-0.11752673}, stopover: true},
+    {location: {lat:51.373878, lng:-0.11833442}, stopover: true},
+    {location: {lat:51.3752, lng:-0.11948716}, stopover: true},
+    {location: {lat:51.377066, lng:-0.1203016}, stopover: true}];
+  var end1 = {lat:51.381914, lng:-0.12090775};
+  var start2 = {lat:51.381914, lng:-0.12090775};
+  var wpts2 = [{location: {lat:51.384681, lng:-0.12131178}, stopover: true},
+    {location: {lat:51.384957, lng:-0.12002139}, stopover: true}];
+  var end2 = {lat:51.383185, lng:-0.11665928};
+
+  directionsService = new google.maps.DirectionsService();
+
+  summaryPanel.innerHTML = '';
+
+  directionsService.route({
+    origin: start1,
+    destination: end1,
+    waypoints: wpts1,
+    optimizeWaypoints: true,
+    travelMode: 'DRIVING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      var directionsRenderer = new google.maps.DirectionsRenderer();
+      directionsRenderer.setMap(map); 
+      directionsRenderer.setDirections(response); 
+      var route = response.routes[0];
+      // For each route, display summary information.
+      for (var i = 0; i < route.legs.length; i++) {
+        var routeSegment = i + 1;
+        summaryPanel.innerHTML += '<b>' + routeSegment +
+            ': </b>';
+        summaryPanel.innerHTML += route.legs[i].duration.value + 's -- ';
+        summaryPanel.innerHTML += route.legs[i].distance.value + 'm<br>';
+      }
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+  
+  //directionsService = new google.maps.DirectionsService();
+
+  directionsService.route({
+    origin: start2,
+    destination: end2,
+    waypoints: wpts2,
+    optimizeWaypoints: true,
+    travelMode: 'DRIVING'
+  }, function(response, status) {
+    if (status === 'OK') {
+      var directionsRenderer = new google.maps.DirectionsRenderer({preserveViewport: true});
+      directionsRenderer.setMap(map); 
+      directionsRenderer.setDirections(response); 
+      var route = response.routes[0];
+      // For each route, display summary information.
+      for (var i = 0; i < route.legs.length; i++) {
+        var routeSegment = i + 24;
+        summaryPanel.innerHTML += '<b>' + routeSegment +
+            ': </b>';
+        summaryPanel.innerHTML += route.legs[i].duration.value + 's -- ';
+        summaryPanel.innerHTML += route.legs[i].distance.value + 'm<br>';
+      }
+    } else {
+      window.alert('Directions request failed due to ' + status);
+    }
+  });
+
+
+
+}
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTsiTOg1jXDcAYsd6LDAiE7ANAxa6lIj4&callback=initMap"
+    async defer></script>
+  </body>
+</html>

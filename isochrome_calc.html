@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Map</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+        width: 50%;
+        float: left;
+      }
+      #txt {
+        height: 100%;
+        width: 50%;
+        float: right;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="txt">
+      <p id='button' onclick='getMore()'>more</p>
+    </div>
+    <script>
+      var map;
+      var index;
+      
+      var SC34698 = {lat:51.398394,lng:-0.047561799};
+      var SC17689 = {lat:51.405684,lng:-0.10377237};
+      var SC1390 = {lat:51.358503,lng:-0.097864666};
+      var SC10824 = {lat:51.339285,lng:-0.11565953};
+      var SC4392 = {lat:51.306703,lng:-0.1465784};
+      var SCW13 = {lat:51.33774,lng:-0.055279945};
+      var SC13231 = {lat:51.410868,lng:-0.086302049};
+      var SC27612 = {lat:51.347509,lng:0.037153693};
+      var SCBP5467 = {lat:51.400745,lng:-0.14575522};
+      var SC40136 = {lat:51.336224,lng:0.030350744};
+      var SCBP3244 = {lat:51.377604,lng:0.11651753};
+      var SCHC272 = {lat:51.38513,lng:0.061632544};
+      var SC6529 = {lat:51.360068,lng:-0.1331494};
+      var SC27962 = {lat:51.417173,lng:0.0039923841};
+      var SCH0095 = {lat:51.428794,lng:-0.020472712};
+      var SC14457 = {lat:51.398805,lng:0.018931475};
+      var SCBP4433 = {lat:51.377702,lng:-0.028784814};
+      var SCH1198 = {lat:51.427786,lng:-0.14807};
+      var SC17525 = {lat:51.417366,lng:0.068461721};
+      var SCBP2370 = {lat:51.375278,lng:-0.085401414};
+      var SC4388 = {lat:51.326289,lng:-0.13018678};
+      var SCBP701 = {lat:51.385881,lng:0.042852954};
+      var SCBP5978 = {lat:51.424774,lng:-0.10535563};
+      var SC17428 = {lat:51.386936,lng:-0.024378106};
+      var SC17874 = {lat:51.288029,lng:-0.077717062};
+      var SC19765 = {lat:51.407957,lng:-0.035406764};
+      var SC35491 = {lat:51.378192,lng:-0.061354323};
+      var SCBP3012 = {lat:51.405743,lng:0.093013449};
+      var SC27763 = {lat:51.335429,lng:-0.004484428};
+      var SC19745 = {lat:51.403808,lng:0.03956841};
+      var SCBP1477 = {lat:51.305711,lng:-0.11430913};
+      var SCHC723 = {lat:51.32258,lng:-0.15657336};
+      var SC19816 = {lat:51.344763,lng:-0.060108921};
+      var SC17532 = {lat:51.427876,lng:0.054320645};
+      var SCBP4139 = {lat:51.385432,lng:0.081149242};
+      var SC4418 = {lat:51.382697,lng:-0.10696455};
+      var SCBP2041 = {lat:51.420762,lng:0.01289433};
+      var SCHC59 = {lat:51.348834,lng:-0.14602774};
+      var SC46008 = {lat:51.426197,lng:-0.048980587};
+      var SC20868 = {lat:51.347893,lng:-0.048804459};
+      var SCBP2134 = {lat:51.408705,lng:-0.13338352};
+      var SC26277 = {lat:51.387515,lng:-0.095238897};
+      var SCBP4156 = {lat:51.323754,lng:-0.17007503};
+      var SC12419 = {lat:51.331257,lng:-0.075479005};
+      var SC27756 = {lat:51.350229,lng:-0.010189021};
+      var SC6512 = {lat:51.372251,lng:-0.11002471};
+      var SC19770 = {lat:51.411899,lng:-0.049014139};
+      var SCBP4456 = {lat:51.377494,lng:-0.029210495};
+      var SC2183 = {lat:51.429489,lng:-0.16658736};
+      var SCBP1850 = {lat:51.34699,lng:-0.035660378};
+      var SCHC429 = {lat:51.360837,lng:0.086196469};
+      var SC13353 = {lat:51.427295,lng:-0.099957686};
+      var SC4868 = {lat:51.421177,lng:-0.12883377};
+      var SC17340 = {lat:51.383169,lng:-0.06595837};
+      var SC9471 = {lat:51.376255,lng:0.010869445};
+      var SCBP2842 = {lat:51.427724,lng:0.076194168};
+      var SC36974 = {lat:51.385753,lng:-0.15765759};
+      var SC17334 = {lat:51.390859,lng:-0.065519087};
+      var SC8795 = {lat:51.400475,lng:-0.16005637};
+      var SC8239 = {lat:51.352631,lng:0.089471601};
+      var SCBP3873 = {lat:51.429581,lng:-0.079650847};
+      var SCOC756 = {lat:51.316405,lng:0.058578498};
+      var SC1242 = {lat:51.390208,lng:0.034550822};
+      var SCBP2529 = {lat:51.411344,lng:-0.074734986};
+      var SCBP2707 = {lat:51.414608,lng:-0.033568469};
+      var SC19738 = {lat:51.401928,lng:0.052985094};
+      var SCBP6007 = {lat:51.33965,lng:-0.093777998};
+      var SC19706 = {lat:51.426233,lng:0.021046471};
+      var SC18949 = {lat:51.373117,lng:0.078809016};
+      var SCHC522 = {lat:51.30061,lng:0.086720875};
+      var SC40169 = {lat:51.312484,lng:0.02869984};
+      var SC18945 = {lat:51.368568,lng:0.057885823};
+      var SC6526 = {lat:51.359745,lng:-0.13714131};
+      var SCHC534 = {lat:51.325819,lng:0.072434989};
+      var SCHC420 = {lat:51.384095,lng:0.11563852};
+      var SC14459 = {lat:51.406927,lng:0.014659228};
+      var SC19125 = {lat:51.373397,lng:-0.16336925};
+      var SCBP1490 = {lat:51.29943,lng:-0.11459524};
+      var SC26138 = {lat:51.40048,lng:0.10365656};
+      var SCBP4093 = {lat:51.309654,lng:-0.080242713};
+      var SC17434 = {lat:51.375983,lng:-0.015926486};
+      var SCHC498 = {lat:51.33762,lng:0.11407216};
+      var SCOC248 = {lat:51.29881,lng:0.037779798};
+      var SCR0138 = {lat:51.398004,lng:-0.16304504};
+      var SCBP5396 = {lat:51.420273,lng:0.099660669};
+      var SC17380 = {lat:51.381785,lng:-0.12069748};
+      var SCBP2020 = {lat:51.309362,lng:-0.12553745};
+      var SCBP5602 = {lat:51.360809,lng:-0.15094513};
+      var SCSL05 = {lat:51.315541,lng:-0.061485363};
+      var SC16652 = {lat:51.426134,lng:0.10079245};
+      var SCBP166 = {lat:51.371976,lng:0.022276832};
+      var SCHC619 = {lat:51.328369,lng:0.053817515};
+      var SCH0107 = {lat:51.429307,lng:-0.0014037071};
+      var SCBP1136 = {lat:51.296872,lng:-0.15274068};
+      var SC26832 = {lat:51.372914,lng:-0.044651702};
+      var SCW37 = {lat:51.307699,lng:-0.047970342};
+      var SCBP1923 = {lat:51.339209,lng:-0.037644189};
+      var SC27556 = {lat:51.408063,lng:-0.060651912};
+      var SC17811 = {lat:51.343773,lng:0.050255846};
+      var SC17338 = {lat:51.384869,lng:-0.063788427};
+      var SC40159 = {lat:51.292914,lng:0.055591204};
+      var SC17715 = {lat:51.370747,lng:-0.0020440014};
+      var SC14123 = {lat:51.399711,lng:-0.018321439};
+      var SC12083 = {lat:51.342982,lng:-0.10903218};
+      var SCBP3340 = {lat:51.357988,lng:0.10917818};
+      var SC19021 = {lat:51.425661,lng:-0.045436018};
+      var SC18795 = {lat:51.397602,lng:-0.048026824};
+      var SC27856 = {lat:51.315689,lng:-0.16441204};
+      var SCR0903 = {lat:51.421608,lng:-0.059129279};
+      var SCBP2045 = {lat:51.424539,lng:0.00079045261};
+      var SCBP2760 = {lat:51.409388,lng:-0.061386714};
+      var SC17708 = {lat:51.378922,lng:0.0068908728};
+      var SCHC66 = {lat:51.354674,lng:-0.16226537};
+      var SC18190 = {lat:51.419281,lng:0.00063272902};
+      var SC17410 = {lat:51.410748,lng:-0.056080521};
+      var SC26254 = {lat:51.429087,lng:0.013547924};
+      var SC19756 = {lat:51.406386,lng:0.0032475059};
+      var SCHC539 = {lat:51.31884,lng:0.07250785};
+      var SCBP671 = {lat:51.409718,lng:-0.02512175};
+      var SCBP2239 = {lat:51.399958,lng:-0.0058318723};
+      var SC40008 = {lat:51.42967,lng:-0.03729512};
+      var SC17339 = {lat:51.384394,lng:-0.064469544};
+      var SC19785 = {lat:51.372993,lng:-0.055855464};
+      var SC26922 = {lat:51.400787,lng:-0.030940932};
+      var SCBP4006 = {lat:51.411069,lng:0.0023305509};
+      var SCBP4012 = {lat:51.410575,lng:-0.0035292804};
+      var SCH0456 = {lat:51.351304,lng:0.065901399};
+      var SC17411 = {lat:51.409019,lng:-0.058627122};
+      var SCH0231 = {lat:51.310109,lng:0.10468593};
+      var SC17420 = {lat:51.393229,lng:-0.041428217};
+      var SC33170 = {lat:51.369186,lng:-0.028259834};
+      var SCBP4020 = {lat:51.4128,lng:-0.020732251};
+      var SC35670 = {lat:51.402588,lng:-0.054255562};
+      var SCBP2221 = {lat:51.397779,lng:-0.024255945};
+      var SC18794 = {lat:51.399618,lng:-0.040623353};
+      var SCBP1681 = {lat:51.406649,lng:0.019866481};
+      var SCBP2192 = {lat:51.408628,lng:-0.043229115};
+      var SCBP6125 = {lat:51.410693,lng:-0.026949129};
+      var SC6601 = {lat:51.409675,lng:-0.062941968};
+      var SC17336 = {lat:51.388322,lng:-0.064878723};
+      var SC34256 = {lat:51.387318,lng:-0.023599879};
+      var SC26262 = {lat:51.425917,lng:0.0017281124};
+      var SC1603 = {lat:51.415906,lng:-0.02465371};
+      var SC20402 = {lat:51.417465,lng:0.016877164};
+      var SC20159 = {lat:51.382739,lng:-0.018695394};
+      var SCBP2190 = {lat:51.406675,lng:-0.045282373};
+      var SC19786 = {lat:51.36936,lng:-0.054242216};
+      var SC20981 = {lat:51.406231,lng:-0.057523036};
+      var SC37294 = {lat:51.400733,lng:0.016629818};
+      var SC17815 = {lat:51.368878,lng:-0.0047688702};
+      var SC17412 = {lat:51.409066,lng:-0.05879765};
+      var SCBP2199 = {lat:51.41285,lng:-0.0678841};
+      var SC19787 = {lat:51.370127,lng:-0.054439546};
+      var SCBP4010 = {lat:51.412549,lng:-0.0048669493};
+      var SC1604 = {lat:51.416203,lng:-0.024698411};
+      var SCH0133 = {lat:51.428792,lng:0.00084675776};
+      var SC7723 = {lat:51.392867,lng:0.0023263018};
+      var SC19759 = {lat:51.406845,lng:-0.0068406921};
+      var SCBP2034 = {lat:51.416529,lng:-0.027488816};
+      var SCBP2189 = {lat:51.405474,lng:-0.047188354};
+      var SCBP2224 = {lat:51.381628,lng:-0.013095629};
+      var SC17714 = {lat:51.370516,lng:-0.00219774};
+      var SCBP2048 = {lat:51.429196,lng:-0.011823856};
+      var SCBP2233 = {lat:51.405048,lng:0.0009748227};
+      var SCBP2630 = {lat:51.386988,lng:-0.06414452};
+      var SC33008 = {lat:51.376888,lng:-0.02903533};
+      var SCBP2227 = {lat:51.398645,lng:-0.018568779};
+      var SC17408 = {lat:51.415133,lng:-0.048818917};
+      var SC18804 = {lat:51.382946,lng:-0.064415697};
+      var SC17394 = {lat:51.429494,lng:-0.03750408};
+      var SCBP4000 = {lat:51.380629,lng:-0.027437564};
+      var SC19755 = {lat:51.406864,lng:0.0047206749};
+      var SCBP2037 = {lat:51.425455,lng:-0.032052773};
+      var SCOC561 = {lat:51.388762,lng:-0.010644973};
+      var SC17333 = {lat:51.392832,lng:-0.066801435};
+      var SC18189 = {lat:51.419084,lng:0.0010987622};
+      var SCBP4009 = {lat:51.41244,lng:-0.0047997946};
+      var SC6589 = {lat:51.414223,lng:-0.069882697};
+      var SC19774 = {lat:51.395656,lng:-0.0035176731};
+      var SCR0501 = {lat:51.375261,lng:0.0053513505};
+      var SC18799 = {lat:51.389841,lng:-0.05563004};
+      var SC26259 = {lat:51.42459,lng:0.0083300918};
+      var SC19707 = {lat:51.425657,lng:0.022099923};
+      var SCBP810 = {lat:51.414521,lng:0.019638244};
+      var SCR0083 = {lat:51.427326,lng:-0.057419707};
+      var SC6561 = {lat:51.406751,lng:-0.063424991};
+      var SC27557 = {lat:51.408328,lng:-0.060353124};
+      var SC33009 = {lat:51.372125,lng:-0.030834722};
+      var SCH1019 = {lat:51.339362,lng:0.080109826};
+      var SC18791 = {lat:51.40476,lng:-0.034062843};
+      var SC19777 = {lat:51.397212,lng:-0.0046143387};
+      var SC17405 = {lat:51.419506,lng:-0.05276051};
+      var SC19751 = {lat:51.407153,lng:0.023469064};
+      var SCBP2052 = {lat:51.422589,lng:0.007566314};
+      var SCR0859 = {lat:51.397176,lng:-0.02905465};
+      var SC3619 = {lat:51.416263,lng:0.0051462689};
+      var SC19778 = {lat:51.399434,lng:-0.013114764};
+      var SCBP2049 = {lat:51.42047,lng:0.016808083};
+      var SCBP2541 = {lat:51.415694,lng:-0.072984616};
+      var SCBP2231 = {lat:51.389681,lng:-0.023440584};
+      var SCBP3572 = {lat:51.378016,lng:-0.058904527};
+      var SC33842 = {lat:51.398582,lng:0.016204553};
+      var SCBP042 = {lat:51.40277,lng:0.016403089};
+      var SC17419 = {lat:51.393115,lng:-0.041088083};
+      var SCBP2042 = {lat:51.42178,lng:0.010134301};
+      var SCBP2033 = {lat:51.416999,lng:-0.027109024};
+      var SC19775 = {lat:51.395077,lng:-0.0027810067};
+      var SCBP4212 = {lat:51.379487,lng:-0.042460356};
+      var SC17816 = {lat:51.36985,lng:-0.0074276669};
+      var SC19781 = {lat:51.402895,lng:-0.018873932};
+      var SC26835 = {lat:51.372343,lng:-0.034675996};
+      var SC17316 = {lat:51.427719,lng:-0.056712549};
+      var SC14125 = {lat:51.408666,lng:-0.024635018};
+      var SC31326 = {lat:51.399239,lng:-0.043198563};
+      var SC18733 = {lat:51.375853,lng:0.006483648};
+      var SC17433 = {lat:51.37585,lng:-0.015501169};
+      var SC19767 = {lat:51.408871,lng:-0.040012144};
+      var SC18781 = {lat:51.425384,lng:-0.012938706};
+      var SC17400 = {lat:51.425749,lng:-0.047518009};
+      var SCBP4016 = {lat:51.4118,lng:-0.0083939967};
+      var SCBP087 = {lat:51.398521,lng:0.01922088};
+      var SC18728 = {lat:51.397536,lng:-0.072324647};
+      var SC14124 = {lat:51.408797,lng:-0.024399305};
+      var SCBP4045 = {lat:51.425353,lng:-0.043708616};
+      var SC33167 = {lat:51.368061,lng:-0.02656983};
+      var SCBP5873 = {lat:51.406238,lng:0.013406763};
+      var SC19769 = {lat:51.409351,lng:-0.043442699};
+      var SC17435 = {lat:51.376568,lng:-0.019119923};
+      var SC1429 = {lat:51.40658,lng:-0.032647578};
+      var SC20692 = {lat:51.397519,lng:0.013196356};
+      var SC17832 = {lat:51.426601,lng:-0.065764932};
+      var SCBP3998 = {lat:51.384539,lng:-0.02571729};
+      var SCBP4001 = {lat:51.381285,lng:-0.027380638};
+      var SC19779 = {lat:51.399299,lng:-0.013623799};
+      var SCBP794 = {lat:51.414044,lng:0.022306456};
+      var SCBP2238 = {lat:51.401302,lng:-0.0040049988};
+      var SCBP2039 = {lat:51.420548,lng:0.016408825};
+      var SC37087 = {lat:51.408998,lng:0.016590845};
+      var SCBP3992 = {lat:51.405092,lng:-0.058793445};
+      var SCBP3997 = {lat:51.404766,lng:-0.059770559};
+      var SCBP2082 = {lat:51.28919,lng:-0.099224363};
+      var SCBP2878 = {lat:51.397422,lng:-0.036174486};
+      var SC17791 = {lat:51.387543,lng:0.017573314};
+      var SCBP4039 = {lat:51.382448,lng:-0.0047535818};
+      var SC1523 = {lat:51.402825,lng:-0.037150744};
+      var markers = [SC34698, SC17689, SC1390, SC10824, SC4392, SCW13, SC13231, SC27612, SCBP5467, SC40136, SCBP3244, SCHC272, SC6529, SC27962, SCH0095, SC14457, SCBP4433, SCH1198, SC17525, SCBP2370, SC4388, SCBP701, SCBP5978, SC17428, SC17874, SC19765, SC35491, SCBP3012, SC27763, SC19745, SCBP1477, SCHC723, SC19816, SC17532, SCBP4139, SC4418, SCBP2041, SCHC59, SC46008, SC20868, SCBP2134, SC26277, SCBP4156, SC12419, SC27756, SC6512, SC19770, SCBP4456, SC2183, SCBP1850, SCHC429, SC13353, SC4868, SC17340, SC9471, SCBP2842, SC36974, SC17334, SC8795, SC8239, SCBP3873, SCOC756, SC1242, SCBP2529, SCBP2707, SC19738, SCBP6007, SC19706, SC18949, SCHC522, SC40169, SC18945, SC6526, SCHC534, SCHC420, SC14459, SC19125, SCBP1490, SC26138, SCBP4093, SC17434, SCHC498, SCOC248, SCR0138, SCBP5396, SC17380, SCBP2020, SCBP5602, SCSL05, SC16652, SCBP166, SCHC619, SCH0107, SCBP1136, SC26832, SCW37, SCBP1923, SC27556, SC17811, SC17338, SC40159, SC17715, SC14123, SC12083, SCBP3340, SC19021, SC18795, SC27856, SCR0903, SCBP2045, SCBP2760, SC17708, SCHC66, SC18190, SC17410, SC26254, SC19756, SCHC539, SCBP671, SCBP2239, SC40008, SC17339, SC19785, SC26922, SCBP4006, SCBP4012, SCH0456, SC17411, SCH0231, SC17420, SC33170, SCBP4020, SC35670, SCBP2221, SC18794, SCBP1681, SCBP2192, SCBP6125, SC6601, SC17336, SC34256, SC26262, SC1603, SC20402, SC20159, SCBP2190, SC19786, SC20981, SC37294, SC17815, SC17412, SCBP2199, SC19787, SCBP4010, SC1604, SCH0133, SC7723, SC19759, SCBP2034, SCBP2189, SCBP2224, SC17714, SCBP2048, SCBP2233, SCBP2630, SC33008, SCBP2227, SC17408, SC18804, SC17394, SCBP4000, SC19755, SCBP2037, SCOC561, SC17333, SC18189, SCBP4009, SC6589, SC19774, SCR0501, SC18799, SC26259, SC19707, SCBP810, SCR0083, SC6561, SC27557, SC33009, SCH1019, SC18791, SC19777, SC17405, SC19751, SCBP2052, SCR0859, SC3619, SC19778, SCBP2049, SCBP2541, SCBP2231, SCBP3572, SC33842, SCBP042, SC17419, SCBP2042, SCBP2033, SC19775, SCBP4212, SC17816, SC19781, SC26835, SC17316, SC14125, SC31326, SC18733, SC17433, SC19767, SC18781, SC17400, SCBP4016, SCBP087, SC18728, SC14124, SCBP4045, SC33167, SCBP5873, SC19769, SC17435, SC1429, SC20692, SC17832, SCBP3998, SCBP4001, SC19779, SCBP794, SCBP2238, SCBP2039, SC37087, SCBP3992, SCBP3997, SCBP2082, SCBP2878, SC17791, SCBP4039, SC1523];
+
+
+
+        
+      var summary = document.getElementById('txt');
+      //var start = {lat:51.355801, lng:0.10377777}; // orange start
+      //var start = {lat:51.363314, lng:0.081884558}; // orange 9
+      //var start = {lat:51.389993, lng:0.034498167}; // orange 20
+      var start = {lat:51.408797, lng:-0.0243993}; // orange end
+
+      //var start = {lat:51.298761, lng:-0.11549768}; // pink start
+      //var start = {lat:51.340185, lng:-0.11738861}; // pink end
+      //var start = {lat:51.313105, lng:-0.13464017}; // pink 7
+      //var start = {lat:51.322285, lng:-0.136262677}; // pink 13
+
+      //var start = {lat:51.321321, lng:-0.090375963}; // red start
+
+      function route(x) {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 51.363734957313746, lng: 0.005637275390654395},
+          zoom: 12
+        });
+        var directionsDisplay = new google.maps.DirectionsRenderer();
+        var directionsService = new google.maps.DirectionsService();
+        var request = {
+          origin: start,
+          destination: x,
+          travelMode: 'TRANSIT'
+        };
+
+        directionsService.route(request, function(response, status) {
+          if (status == 'OK') {
+            //directionsDisplay.setDirections(response);
+            var route = response.routes[0].legs[0];
+            summary.innerHTML += x.lat+','+x.lng+','+route.duration.value+'<br>'
+          } else if (status == 'ZERO_RESULTS') {
+            summary.innerHTML += name+type+':'+'-1<br>'
+          } else {
+            alert('directions request failed, status='+status)
+          }
+        });
+      }      
+
+      function initMap() {
+
+        for (var i=0; i<8; i++) {
+          setTimeout(route(markers[i]),10000*i);
+        }
+        index = i;
+        }
+
+        function getMore() {
+          for (var i=index; i<index+8; i++) {
+            route(markers[i])
+          }
+          index = i;
+
+          if (index > markers.length) {
+            return;
+          } else {
+            setTimeout(getMore,10000);
+          }
+        }
+
+      
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTsiTOg1jXDcAYsd6LDAiE7ANAxa6lIj4&callback=initMap"
+    async defer></script>
+  </body>
+</html>
