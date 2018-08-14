@@ -63,9 +63,11 @@ o30 = {'x':[],'y':[]}
 orange_start = [546598,163982]
 pink_start = [531479,157201]
 red_start = [533165,159755]
+purple_start = [538051,166008]
+blue_start = [532316,166170]
 
-rte = 'red'
-start = red_start
+rte = 'blue'
+start = blue_start
 with open('from'+rte+'StartEN.csv','rU') as csvfile:
     reader = csv.reader(csvfile)
     next(reader)
@@ -89,7 +91,7 @@ with open('from'+rte+'StartEN.csv','rU') as csvfile:
             o30['x'].append(float(row[2]))
             o30['y'].append(float(row[3]))
 
-edges60 = alpha_shape(np.array(test60))
+edges60 = alpha_shape(np.array(test60),alpha=2200)
 edges30 = alpha_shape(np.array(test30))
 edges15 = alpha_shape(np.array(test15))
 

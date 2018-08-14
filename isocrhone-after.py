@@ -62,12 +62,19 @@ o30 = {'x':[],'y':[]}
 
 orange_start = [546598,163982]
 pink_start = [531479,157201]
+red_start = [533165,159755]
+purple_start = [538051,166008]
+blue_start = [532316,166170]
 
-pickUp = {'pink':['7','13','End'],'orange':['9','20']}
-pickUpTimes = {'pink':[290,717,1569],'orange':[355,898]}
+pickUp = {'pink':['7','13','End'],'orange':['9','20','End'],
+          'red':['9','16','End'],'purple':['9','21','End'],
+          'blue':['15','23','End']}
+pickUpTimes = {'pink':[290,717,1569],'orange':[355,898,1672],
+               'red':[383,664,1379],'purple':[298,932,1596],
+               'blue':[925,475,2050]}
 
-start = orange_start
-rte = 'orange'
+start = blue_start
+rte = 'blue'
 
 stopTimes = [0]
 with open(rte+'DistTimes.csv','rU') as csvfile:
@@ -209,4 +216,5 @@ for p in nodes:
     #plt.fill(x,y,'r',alpha=0.5)
     #plt.plot([test15[i][0],test15[j][0]],[test15[i][1],test15[j][1]],c='r')
 plt.scatter([start[0]],[start[1]],20,'k',zorder=3)
+print(start)
 plt.show()
