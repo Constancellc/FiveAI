@@ -147,6 +147,8 @@ for clr in ['pink2','red2','blue2','orange2','purple2']:
 
     s = 0
     av = 0
+    print(clr)
+    print(p)
 
     for i in range(1,len(p)):
         av += 0.5*(p[i-1]+p[i])*np.sqrt(np.power(e[i]-e[i-1],2)+\

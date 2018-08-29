@@ -16,10 +16,26 @@ blue2_start = [536198,165576]
 purple2_start = [538188,165971]
 red2_start = [533378,159106]
 
-rte = 'orange2_'
-start = orange2_start
+# change these two to switch the map being made 
+rte = 'orange' 
+start = orange_start
 
-def alpha_shape(points, alpha=2000, only_outer=True):
+'''
+rte can take the following values
+
+'pink'
+'orange'
+'red'
+'purple'
+'blue'
+'pink2_'
+'orange2_'
+'blue2_'
+'purple2_'
+'red2_'
+'''
+
+def alpha_shape(points, alpha=8000, only_outer=True):
     """
     Compute the alpha shape (concave hull) of a set of points.
     :param points: np.array of shape (n,2) points.
@@ -75,8 +91,8 @@ def smooth(x,y):
     t = np.arange(len(x))
     ti = np.linspace(2, orig_len + 1, 10 * orig_len)
 
-    xi = interp1d(t, x, kind='cubic')(ti)
-    yi = interp1d(t, y, kind='cubic')(ti)
+    xi = interp1d(t, x, kind='quadratic')(ti)
+    yi = interp1d(t, y, kind='quadratic')(ti)
 
     return [xi,yi]
 
@@ -100,7 +116,6 @@ pickUpTimes = {'pink':[290,717,1569],'orange':[355,898,1672],
                'blue':[925,475,2050],'pink2_':[226,718,1472],
                'orange2_':[470,910,1790],'blue2_':[345,915,1541],
                'purple2_':[476,696,1194],'red2_':[293,728,1523]}
-
 
 
 with open('from'+rte+'StartEN.csv','rU') as csvfile:
@@ -130,7 +145,7 @@ edges60 = alpha_shape(np.array(test60),alpha=2500)
 edges30 = alpha_shape(np.array(test30),alpha=2700)
 edges15 = alpha_shape(np.array(test15),alpha=3000)
 
-img = plt.imread("back2.png")
+img = plt.imread("back.png")
 fig, ax = plt.subplots(figsize=(10,8))
 plt.xlim(527500,547500)
 plt.xticks([527500,547500],['',''])

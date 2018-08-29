@@ -20,12 +20,22 @@ def p_willing(d):
         return 0.0
 
 clrs = ['purple','orange','blue','red','pink']
-plt.figure()
+labels = [['PR\nHospital'],
+          ['PR\nHospital','Bromley\nCentre'],
+          ['West\nWickham','Hayes'],
+          ['Purley','South\nCroydon','Croydon\nCentre'],
+          ['Purley']]
+xs = [[10],
+      [10,21],
+      [8,17],
+      [7,15],
+      [22]]
+plt.figure(figsize=(12,7))
 for cn in range(5):
     clr = clrs[cn]
 
     stops = []
-    with open(clr+'2LatLong.csv','rU') as csvfile:
+    with open(clr+'2_LatLong.csv','rU') as csvfile:
         reader = csv.reader(csvfile)
         next(reader)
         n = 1
@@ -97,12 +107,20 @@ for cn in range(5):
                     passengers[fn][i] += n_passengers
                 
     plt.subplot(2,3,cn+1)
-    plt.title(clr)
+    plt.title(clr+'2')
     plt.plot(passengers[0],label='total')
     plt.plot(passengers[1],label='car drivers')
     plt.xlim(0,len(stops)-1)
     plt.grid()
-    #plt.ylim(0,300)
+    for i in range(len(xs[cn])):
+        x = xs[cn][i]
+        y = passengers[0][x]
+        plt.annotate(labels[cn][i],xy=(x,y),xytext=(-20,20),
+                     textcoords='offset points',ha='right',va='bottom',
+                     bbox=dict(boxstyle='round,pad=0.5',fc='yellow',alpha=0.5),
+                     arrowprops=dict(arrowstyle='->',
+                                     connectionstyle='arc3,rad=0'))
+    plt.ylim(0,300)
     if cn in [0,3]:
         plt.ylabel('potential passengers')
     if cn in [3,4]:
